@@ -1,9 +1,7 @@
 package leetcode;
 
-import util.P;
-
 public class The70 {
-    public int climbStairs(int n) {
+    public int climbStairs(int n) {//递归方式
         if(n<0){
             return -1;
         }else if(n<=2){
@@ -11,7 +9,7 @@ public class The70 {
         }
         return climbStairs(n-1)+climbStairs(n-2);
     }
-    public int climbStairs2(int n){
+    public int climbStairs2(int n){//
         if(n<=2)
             return n;
         int[] temp=new int[n];
@@ -25,7 +23,6 @@ public class The70 {
     public static void main(String []args){
         int res=new The70().climbStairs(10);
         int res2=new The70().climbStairs2(10);
-        System.out.println(res);
-        P.print(res2);
+        System.out.println(res+" "+res2);
     }
 }
