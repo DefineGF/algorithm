@@ -1,2 +1,1 @@
-# FirstRepository
- first,bug maybe
+LeetCode 记录
