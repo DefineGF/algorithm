@@ -1,0 +1,16 @@
+public class The941 {
+    public boolean validMountainArray(int[] A) {
+        int index = 0;
+        int flg = -1;
+        while(index < A.length - 1){
+            if(A[index + 1] < A[index] && flg == -1){
+                flg = index;
+            }
+            if(flg != -1 && A[index + 1] >= A[index]){
+                return false;
+            }
+            index ++;
+        }
+        return flg != -1 && flg != 0 && flg != A.length - 1;
+    }
+}
