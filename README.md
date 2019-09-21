@@ -1,1 +1,3 @@
-LeetCode 记录
+FileOpByCommands:C语言写的小玩意,windows上使用仿linux命令行完成文件操作
+leetcodes：日常leetcode记录（不记真的会忘）
+
