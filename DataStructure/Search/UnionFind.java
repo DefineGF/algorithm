@@ -1,7 +1,7 @@
 // 实现并查集
 public class UnionFind {
         private int[] parent;   // parent[i] 保存i节点的根节点index
-        private int[] rank;     // rank[i] 以i为节点的子树高度
+        private int[] rank;     // rank[i] 以i为节点子连通量（用于小连通量连接大连通量）
 
         private UnionFind(int n) {
             this.parent = new int[n];
