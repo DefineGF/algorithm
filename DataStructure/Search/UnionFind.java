@@ -1,44 +1,67 @@
-// 实现并查集
+import java.util.Arrays;
+
 public class UnionFind {
-        private int[] parent;   // parent[i] 保存i节点的根节点index
-        private int[] rank;     // rank[i] 以i为节点子连通量（用于小连通量连接大连通量）
+    private int[] parent;
+    private int[] rank; // rank[i] 以i为节点的子树高度
+    private int count; // 连通分量数
 
-        private UnionFind(int n) {
-            this.parent = new int[n];
-            this.rank = new int[n];
-            for (int i = 0; i < n; i++) { // 初始化值
-                this.parent[i] = i;
-                this.rank[i] = 1;
-            }
+    public UnionFind(int n) {
+        this.parent = new int[n];
+        this.rank = new int[n];
+        this.count = n;
+        for (int i = 0; i < n; i++) {
+            this.parent[i] = i;
+            this.rank[i] = 1;
         }
+    }
 
-        public void union(int x, int y) { // 合并
-            int rootX = find(x);
-            int rootY = find(y);
-            if (rootX == rootY) // 同根
-                return;
-            // low connect high
-            if (rank[rootX] == rank[rootY]) {
-                parent[rootX] = rootY;
-                rank[rootY]++;
-            } else if (rank[rootX] < rank[rootY]) {
-                parent[rootX] = rootY;
-            } else {
-                parent[rootY] = rootX;
-            }
-        }
+    // 小树 连接到 大树
+    public void union(int x, int y) {
+        int rootX = find(x);
+        int rootY = find(y);
+        if (rootX == rootY)
+            return;
 
-        public int find(int x) { // 获取节点的根节点index
-            if (x != parent[x]) {
-                parent[x] = find(parent[x]);
-            }
-            return parent[x];
+        if (rank[rootX] < rank[rootY]) {
+            parent[rootX] = rootY;
+            rank[rootY] += rank[rootX];
+        } else {
+            parent[rootY] = rootX;
+            rank[rootX] += rank[rootY];
         }
-
-        public boolean isConnected(int x, int y) { // 判断两个节点是否连通
-            int rootX = find(x);
-            int rootY = find(y);
-            return rootX == rootY;
-        }
+        count--;
 
     }
+
+    public int find(int x) {
+        if (x != parent[x]) {
+            parent[x] = find(parent[x]);
+        }
+        return parent[x];
+    }
+
+
+    // 非递归
+    public int find2(int x) {
+        while (x != parent[x]) {
+            x = parent[x];
+        }
+        return x;
+    }
+
+    public boolean isConnected(int x, int y) {
+        int rootX = find(x);
+        int rootY = find(y);
+        return rootX == rootY;
+    }
+
+    public int getCount() {
+        return count;
+    }
+    public void logMsg() {
+        System.out.println("count = " + count);
+        System.out.println("parent: " + Arrays.toString(parent));
+        System.out.println("rank: " + Arrays.toString(rank));
+    }
+
+}
