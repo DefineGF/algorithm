@@ -1,9 +1,9 @@
 import java.util.Arrays;
 
 public class UnionFind {
-    private int[] parent;
-    private int[] rank; // rank[i] 以i为节点的子树高度
-    private int count; // 连通分量数
+    private int[] parent; // parent[i] i的根节点
+    private int[] rank;   // rank[i]以i为根节点的连通分量的大小(主要应用于根节点)
+    private int count;    // 连通分量数
 
     public UnionFind(int n) {
         this.parent = new int[n];
@@ -58,6 +58,7 @@ public class UnionFind {
     public int getCount() {
         return count;
     }
+    
     public void logMsg() {
         System.out.println("count = " + count);
         System.out.println("parent: " + Arrays.toString(parent));
@@ -65,3 +66,4 @@ public class UnionFind {
     }
 
 }
+
