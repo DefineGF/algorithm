@@ -1,5 +1,3 @@
-package leetcode.util;
-
 import java.util.Arrays;
 
 public class UnionFindSmallMemory {
@@ -62,7 +60,7 @@ public class UnionFindSmallMemory {
      * @return the index of the find of i
      */
     public int find(int i) {
-        if (i == record[i])
+        if (i == record[i] || record[i] < 0)
             return i;
 
         // has find
