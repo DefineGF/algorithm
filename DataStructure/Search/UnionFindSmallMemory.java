@@ -1,3 +1,5 @@
+package leetcode.util;
+
 import java.util.Arrays;
 
 public class UnionFindSmallMemory {
@@ -12,23 +14,21 @@ public class UnionFindSmallMemory {
         }
     }
 
-    public void logMsg() {
-        System.out.println("count = " + count + "\n" + Arrays.toString(record));
-    }
+
 
     public int getCount() {
         return count;
     }
 
     public boolean isConnected(int x, int y) {
-        int xRoot = root(x);
-        int yRoot = root(y);
+        int xRoot = find(x);
+        int yRoot = find(y);
         return xRoot == yRoot;
     }
 
     public void union(int x, int y) {
-        int xRoot = root(x);
-        int yRoot = root(y);
+        int xRoot = find(x);
+        int yRoot = find(y);
 
         if (xRoot == yRoot)
             return;
@@ -48,30 +48,49 @@ public class UnionFindSmallMemory {
                 record[xRoot] += (record[yRoot] - 1);
                 record[yRoot] = xRoot;
             }
-        } else {
+        } else { // 均为正数 (根节点是其本身)
             record[xRoot] = -1;
             record[yRoot] = xRoot;
         }
 
     }
 
-    public int root(int index) {
-        if (index == record[index])
-            return index;
 
-        // has root
-        while (record[index] >= 0) {
-            index = record[index];
+    /**
+     *
+     * @param i
+     * @return the index of the find of i
+     */
+    public int find(int i) {
+        if (i == record[i])
+            return i;
+
+        // has find
+        int parent = i;
+        while (record[parent] >= 0) {
+            parent = record[parent];
         }
-        return index;
+        record[i] = parent; // 趁机修改根节点减少下次搜索时间
+        return i;
+    }
+
+    public void logMsg() {
+        System.out.println("count = " + count + "\n" + Arrays.toString(record));
     }
 
     public static void main(String []args) {
-        UnionFindSmallMemory unionFindSmallMemory = new UnionFindSmallMemory(4);
-        unionFindSmallMemory.union(0,1);
-        unionFindSmallMemory.union(1,2);
+        int [][]data = {{0,2},{2,3},{2,4}};
+
+        UnionFindSmallMemory unionFindSmallMemory = new UnionFindSmallMemory(5);
+        UnionFind unionFind = new UnionFind(5);
+        for (int[] aData : data) {
+            unionFindSmallMemory.union(aData[0], aData[1]);
+            unionFind.union(aData[0], aData[1]);
+        }
         unionFindSmallMemory.logMsg();
-        System.out.println(unionFindSmallMemory.isConnected(0,3));
-        System.out.println(unionFindSmallMemory.isConnected(0,2));
+        unionFind.logMsg();
+
+        System.out.println(unionFindSmallMemory.isConnected(1,3));
+        System.out.println(unionFind.isConnected(1,3));
     }
 }
